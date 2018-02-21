@@ -1,6 +1,8 @@
-node {
-    def app
+#!groovy
 
+pipeline {
+  agent none
+  stages {
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
@@ -15,7 +17,7 @@ node {
       }
     }
 
-     stage('Docker Push') {
+    stage('Docker Push') {
       agent any
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
@@ -24,4 +26,5 @@ node {
         }
       }
     }
+  }
 }
